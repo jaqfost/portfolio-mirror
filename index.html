@@ -164,7 +164,7 @@ $('calculate').onclick=showDashboard;$('changeStrategy').onclick=()=>{document.q
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>t.dataset.view==='dashboard'?showDashboard():$('changeStrategy').click());
 $('chartMode').onchange=calculate;window.onresize=()=>{if($('dashboard').classList.contains('active'))calculate()};
 $('saveBtn').onclick=()=>{localStorage.setItem('portfolioMirror',JSON.stringify({...params(),selected,real}));$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)};
-try{const s=JSON.parse(localStorage.getItem('portfolioMirror'));if(s){['age','targetAge','capital','contribution','inflation','fee','shockAge','shock'].forEach(k=>{if(s[k]!=null)$(k).value=s[k]});if(s.selected)selected=s.selected;if(s.real!=null)real=s.real}}catch(e){}
+try{const s=JSON.parse(localStorage.getItem('portfolioMirror'));if(s){const map={age:'age',target:'targetAge',start:'capital',monthly:'contribution',infl:'inflation',fee:'fee',shockAge:'shockAge',shock:'shock'};Object.entries(map).forEach(([key,id])=>{if(s[key]!=null)$(id).value=key==='infl'||key==='fee'||key==='shock'?s[key]*100:s[key]});if(s.selected)selected=s.selected;if(s.real!=null){real=s.real;$('realToggle').classList.toggle('on',real)}}}catch(e){}
 renderProfiles();calculate();
 </script>
 </body>
