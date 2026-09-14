@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PortfolioMirror is an educational wealth projection lab for comparing investment strategies and disclosure-based portfolio approximations.">
+<title>PortfolioMirror — See where your strategy could take you</title>
+<style>
+:root{--ink:#11231d;--muted:#627069;--paper:#f5f4ed;--panel:#fff;--line:#d9ddd5;--green:#155f46;--mint:#ccebdc;--lime:#c9f27b;--orange:#ff8d4d;--blue:#5c78e8;--shadow:0 18px 60px rgba(22,49,39,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}.shell{max-width:1460px;margin:auto;padding:0 34px}.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(17,35,29,.12)}
+.logo{font-weight:850;letter-spacing:-.04em;font-size:21px;display:flex;align-items:center;gap:10px}.logo-mark{width:30px;height:30px;background:var(--green);border-radius:9px;display:grid;place-items:center;color:white;font-weight:900}
+.nav{display:flex;gap:28px;color:#46544e;font-size:13px}.nav a{color:inherit;text-decoration:none}.header-actions{display:flex;gap:8px}.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;font-weight:700;font-size:13px}.btn.primary{background:var(--green);border-color:var(--green);color:#fff}.btn.ghost{background:transparent}
+.hero{padding:58px 0 34px;display:grid;grid-template-columns:1.08fr .92fr;gap:55px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #bfd2c8;background:#eaf5ef;border-radius:999px;padding:6px 10px;color:var(--green);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.pulse{width:7px;height:7px;border-radius:50%;background:#25a168;box-shadow:0 0 0 4px rgba(37,161,104,.12)}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(46px,5.5vw,78px);line-height:.98;letter-spacing:-.055em;margin:20px 0 22px;font-weight:500}.hero-copy{font-size:17px;max-width:610px;color:var(--muted)}.hero-actions{display:flex;gap:10px;margin-top:28px}.micro{font-size:11px;color:#7b857f;margin-top:16px}
+.hero-card{background:var(--ink);color:white;border-radius:24px;padding:27px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero-card:before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-85px;top:-95px;background:rgba(201,242,123,.14)}.hc-top{display:flex;justify-content:space-between;align-items:start}.hc-label{font-size:12px;color:#b8c5bf}.hc-value{font-family:Georgia,serif;font-size:42px;margin:5px 0}.gain{color:var(--lime);font-weight:800;font-size:13px}.spark{height:150px;margin:24px 0 8px;position:relative}.spark svg{width:100%;height:100%;overflow:visible}.spark-grid line{stroke:rgba(255,255,255,.10)}.spark-line{fill:none;stroke:var(--lime);stroke-width:3}.spark-fill{fill:url(#fill)}.hc-bottom{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.12);padding-top:18px;margin-top:12px}.hc-stat span{display:block;color:#9eaaa4;font-size:10px;text-transform:uppercase;letter-spacing:.08em}.hc-stat b{font-size:14px}
+.app-wrap{padding:28px 0 70px}.app{display:grid;grid-template-columns:350px 1fr;gap:20px}.sidebar,.workspace{background:rgba(255,255,255,.78);border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 30px rgba(24,42,35,.04)}.sidebar{padding:22px;height:max-content;position:sticky;top:18px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.section-title h2{font-size:16px;margin:0;letter-spacing:-.02em}.step{font-size:10px;background:#edf1ed;color:#66736d;padding:4px 7px;border-radius:99px;font-weight:800}
+.field{margin-bottom:16px}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:#46544e;margin-bottom:7px}.field label output{color:var(--green)}.control{width:100%;border:1px solid #d4d9d3;background:white;border-radius:10px;padding:11px 12px;outline:none}.control:focus{border-color:#50a17d;box-shadow:0 0 0 3px rgba(80,161,125,.12)}input[type=range]{width:100%;accent-color:var(--green)}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-top:1px solid #e7e9e4;font-size:12px}.switch{width:38px;height:22px;border-radius:99px;background:#d9ded9;position:relative;border:0}.switch:after{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;border-radius:50%;background:white;transition:.2s}.switch.on{background:var(--green)}.switch.on:after{left:19px}.advanced{display:none;padding-top:12px}.advanced.open{display:block}.sidebar .primary{width:100%;padding:13px;margin-top:4px}
+.workspace{padding:20px;min-width:0}.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);padding-bottom:13px;margin-bottom:20px;overflow:auto}.tab{border:0;background:transparent;border-radius:8px;padding:8px 12px;font-weight:750;color:#748079;font-size:12px;white-space:nowrap}.tab.active{background:#e9f4ee;color:var(--green)}
+.profile-head{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:14px}.profile-head h2{margin:0;font:500 28px Georgia,serif;letter-spacing:-.03em}.search{width:260px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 12px}.filters{display:flex;gap:7px;margin-bottom:14px;overflow:auto}.chip{border:1px solid var(--line);background:white;padding:6px 10px;border-radius:99px;font-size:11px;font-weight:750;white-space:nowrap}.chip.active{background:var(--ink);color:white;border-color:var(--ink)}
+.profiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.profile{border:1px solid var(--line);background:white;border-radius:14px;padding:15px;min-height:176px;position:relative;transition:.2s}.profile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(17,35,29,.08)}.profile.selected{border:2px solid var(--green);padding:14px;background:#f8fdf9}.profile .check{position:absolute;right:12px;top:12px;width:20px;height:20px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:11px}.profile.selected .check{background:var(--green);color:#fff;border-color:var(--green)}.type{font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:#84908a;font-weight:850}.profile h3{margin:7px 0 4px;font-size:14px}.profile p{font-size:11px;color:#68746e;margin:0 0 12px;min-height:34px}.bars{display:flex;height:7px;border-radius:10px;overflow:hidden;background:#eee;margin:9px 0}.bars span{display:block;height:100%}.holdings{font-size:10px;color:#77827c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.date{font-size:9px;color:#9aa39e;margin-top:8px}
+.dashboard{display:none}.dashboard.active{display:block}.library.hidden{display:none}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}.metric{border:1px solid var(--line);background:#fff;border-radius:13px;padding:16px}.metric span{font-size:10px;color:#78837d;text-transform:uppercase;letter-spacing:.07em;font-weight:800}.metric strong{display:block;font:500 27px Georgia,serif;margin-top:5px}.metric small{color:#5d6963;font-size:10px}.metric.accent{background:var(--green);color:#fff;border-color:var(--green)}.metric.accent span,.metric.accent small{color:#cfe0d8}
+.chart-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}.chart-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.chart-top h3{margin:0;font-size:13px}.chart-top select{border:1px solid var(--line);border-radius:8px;padding:6px;background:#fff;font-size:11px}canvas{width:100%;height:330px;display:block}.legend{display:flex;gap:16px;justify-content:center;font-size:10px;color:#59665f;margin-top:7px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.allocation,.milestone{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}.allocation h3,.milestone h3{font-size:13px;margin:0 0 14px}.alloc-row{display:grid;grid-template-columns:105px 1fr 34px;gap:8px;align-items:center;font-size:10px;margin:9px 0}.alloc-track{height:7px;background:#edf0ec;border-radius:9px;overflow:hidden}.alloc-track i{display:block;height:100%;border-radius:9px}.milestone-main{display:flex;align-items:center;justify-content:space-between;background:#eef7f1;border-radius:11px;padding:14px}.milestone-main strong{font:500 24px Georgia,serif}.milestone-main span{font-size:10px;color:#637069}.disclosure{margin-top:16px;padding:13px;border-radius:11px;background:#fff5e9;border:1px solid #f4d8ba;color:#71583d;font-size:10px}.source-link{color:var(--green);font-weight:750}
+.footer{border-top:1px solid var(--line);padding:28px 0 45px;display:flex;justify-content:space-between;color:#6c7872;font-size:11px}.footer a{color:inherit}
+.toast{position:fixed;right:22px;bottom:22px;background:var(--ink);color:white;border-radius:10px;padding:12px 16px;font-size:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:none}
+@media(max-width:1050px){.hero{grid-template-columns:1fr}.hero-card{max-width:650px}.app{grid-template-columns:1fr}.sidebar{position:static}.profiles{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.shell{padding:0 16px}.nav{display:none}.topbar{height:62px}.hero{padding-top:38px;gap:28px}h1{font-size:48px}.hero-actions{flex-direction:column}.app-wrap{padding-top:10px}.profiles{grid-template-columns:1fr}.profile-head{align-items:start;flex-direction:column}.search{width:100%}.summary-grid{grid-template-columns:1fr}.compare{grid-template-columns:1fr}.workspace,.sidebar{padding:14px}.field-row{grid-template-columns:1fr 1fr}.header-actions .ghost{display:none}canvas{height:270px}.footer{flex-direction:column;gap:8px}}
+</style>
+</head>
+<body>
+<header class="shell topbar">
+  <div class="logo"><span class="logo-mark">↗</span>PortfolioMirror</div>
+  <nav class="nav"><a href="#lab">Projection lab</a><a href="#profiles">Public profiles</a><a href="#method">Methodology</a></nav>
+  <div class="header-actions"><button class="btn ghost" id="saveBtn">Save scenario</button><button class="btn primary" onclick="document.getElementById('lab').scrollIntoView()">Start projecting</button></div>
+</header>
+
+<main>
+<section class="shell hero">
+  <div>
+    <span class="eyebrow"><i class="pulse"></i>Educational projection lab</span>
+    <h1>Your money.<br>Their playbook.</h1>
+    <p class="hero-copy">See how your future wealth could evolve using your own strategy—or a transparent approximation of a publicly disclosed portfolio.</p>
+    <div class="hero-actions"><button class="btn primary" onclick="document.getElementById('lab').scrollIntoView()">Build my projection →</button><button class="btn" onclick="document.getElementById('profiles').scrollIntoView()">Explore public profiles</button></div>
+    <div class="micro">No brokerage connection · No trades · No personalized investment advice</div>
+  </div>
+  <div class="hero-card">
+    <div class="hc-top"><div><div class="hc-label">Illustrative value at age 65</div><div class="hc-value" id="heroValue">$2,041,880</div><div class="gain">▲ median projection</div></div><span class="eyebrow" style="background:rgba(255,255,255,.08);color:#d9eee3;border-color:rgba(255,255,255,.12)">Balanced mirror</span></div>
+    <div class="spark"><svg viewBox="0 0 500 150" preserveAspectRatio="none"><defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9f27b" stop-opacity=".25"/><stop offset="1" stop-color="#c9f27b" stop-opacity="0"/></linearGradient></defs><g class="spark-grid"><line x1="0" y1="30" x2="500" y2="30"/><line x1="0" y1="75" x2="500" y2="75"/><line x1="0" y1="120" x2="500" y2="120"/></g><path class="spark-fill" d="M0 132 C80 127 115 122 170 110 S260 89 300 72 S390 50 500 12 L500 150 L0 150Z"/><path class="spark-line" d="M0 132 C80 127 115 122 170 110 S260 89 300 72 S390 50 500 12"/></svg></div>
+    <div class="hc-bottom"><div class="hc-stat"><span>Starting</span><b>$25,000</b></div><div class="hc-stat"><span>Monthly</span><b>$750</b></div><div class="hc-stat"><span>Horizon</span><b>35 years</b></div><div class="hc-stat"><span>Real return</span><b>4.7%</b></div></div>
+  </div>
+</section>
+
+<section class="shell app-wrap" id="lab">
+<div class="app">
+<aside class="sidebar">
+  <div class="section-title"><h2>Your starting point</h2><span class="step">STEP 1</span></div>
+  <div class="field-row">
+    <div class="field"><label>Current age</label><input id="age" class="control" type="number" min="18" max="90" value="30"></div>
+    <div class="field"><label>Target age</label><input id="targetAge" class="control" type="number" min="19" max="100" value="65"></div>
+  </div>
+  <div class="field"><label>Starting portfolio</label><input id="capital" class="control" type="number" min="0" step="1000" value="25000"></div>
+  <div class="field"><label>Monthly contribution</label><input id="contribution" class="control" type="number" min="0" step="50" value="750"></div>
+  <div class="field"><label>Contribution growth <output id="growthOut">2.5%</output></label><input id="growth" type="range" min="0" max="8" step=".5" value="2.5"></div>
+  <div class="field"><label>Risk preference</label><select id="risk" class="control"><option>Balanced</option><option>Conservative</option><option>Aggressive</option></select></div>
+  <div class="toggle-row"><span>Show real purchasing power</span><button id="realToggle" class="switch on" aria-label="Toggle inflation adjustment"></button></div>
+  <div class="toggle-row"><span>Advanced assumptions</span><button id="advancedToggle" class="switch" aria-label="Toggle advanced assumptions"></button></div>
+  <div class="advanced" id="advanced">
+    <div class="field-row"><div class="field"><label>Inflation %</label><input id="inflation" class="control" type="number" step=".1" value="2.5"></div><div class="field"><label>Annual fee %</label><input id="fee" class="control" type="number" step=".05" value=".15"></div></div>
+    <div class="field-row"><div class="field"><label>Drawdown age</label><input id="shockAge" class="control" type="number" value="45"></div><div class="field"><label>Drawdown %</label><input id="shock" class="control" type="number" value="0"></div></div>
+  </div>
+  <button class="btn primary" id="calculate">Update projection</button>
+</aside>
+
+<section class="workspace">
+  <div class="tabs"><button class="tab active" data-view="library">1 · Choose a strategy</button><button class="tab" data-view="dashboard">2 · View projection</button><button class="tab" data-view="dashboard">3 · Compare outcomes</button></div>
+  <div class="library" id="profiles">
+    <div class="profile-head"><div><h2>Mirror a public playbook</h2><div class="micro">Disclosure-based proxies and classic strategies. Choose up to three.</div></div><input id="search" class="search" placeholder="Search profiles or holdings…"></div>
+    <div class="filters"><button class="chip active" data-filter="all">All profiles</button><button class="chip" data-filter="Congress">Congress</button><button class="chip" data-filter="Investor">Public investors</button><button class="chip" data-filter="Classic">Classic strategies</button><button class="chip" data-filter="Benchmark">Benchmarks</button></div>
+    <div class="profiles" id="profileGrid"></div>
+  </div>
+
+  <div class="dashboard" id="dashboard">
+    <div class="profile-head"><div><span class="type">Projection dashboard</span><h2 id="dashTitle">Balanced 60/40</h2></div><button class="btn" id="changeStrategy">Change strategies</button></div>
+    <div class="summary-grid">
+      <div class="metric accent"><span>Median at target</span><strong id="medianValue">$0</strong><small id="medianSub">in today’s dollars</small></div>
+      <div class="metric"><span>Pessimistic case</span><strong id="lowValue">$0</strong><small>10th-percentile proxy</small></div>
+      <div class="metric"><span>Optimistic case</span><strong id="highValue">$0</strong><small>90th-percentile proxy</small></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-top"><h3>Projected portfolio value</h3><select id="chartMode"><option value="range">Probability range</option><option value="lines">Strategy comparison</option></select></div>
+      <canvas id="chart"></canvas>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="compare">
+      <div class="allocation"><h3>Mirrored allocation</h3><div id="allocationRows"></div></div>
+      <div class="milestone"><h3>Milestone</h3><div class="milestone-main"><div><span id="mileAge">At age 55</span><strong id="mileValue">$0</strong></div><div style="font-size:28px">◎</div></div><div class="disclosure" id="profileDisclosure"></div></div>
+    </div>
+  </div>
+</section>
+</div>
+</section>
+
+<section class="shell" id="method" style="padding:0 0 70px"><div class="chart-card"><div class="profile-head"><div><span class="type">Methodology</span><h2 style="margin-top:5px">Transparent by default.</h2></div></div><div class="compare"><div><p><b>What the model does</b></p><p class="micro" style="font-size:12px">Annual compounding with monthly contributions approximated at mid-year, adjustable contribution growth, fees, inflation and an optional one-time drawdown. Probability bands use each profile’s assumed return and volatility—not a promise or a full Monte Carlo simulation.</p></div><div><p><b>What disclosures do not show</b></p><p class="micro" style="font-size:12px">Congressional disclosures report broad value ranges and may include spouse/dependent holdings. Form 13F generally covers certain U.S.-listed securities, not an investor’s entire economic portfolio. Profiles here are simplified educational proxies.</p></div></div></div></section>
+</main>
+
+<footer class="shell footer"><div>© 2026 PortfolioMirror · Educational use only</div><div><a href="https://disclosures-clerk.house.gov/" target="_blank">House disclosures</a> · <a href="https://efdsearch.senate.gov/" target="_blank">Senate disclosures</a> · <a href="https://www.sec.gov/edgar/search/" target="_blank">SEC EDGAR</a></div></footer>
+<div class="toast" id="toast">Scenario saved locally ✓</div>
+
+<script>
+const colors={us:'#155f46',intl:'#5c78e8',bonds:'#d6a23f',cash:'#b8c0bb',alts:'#ff8d4d'};
+const profiles=[
+{id:'balanced',name:'Balanced 60/40',type:'Benchmark',summary:'Broad global equity with a stabilizing bond sleeve.',allocation:{us:48,intl:12,bonds:38,cash:2,alts:0},ret:7.0,vol:11,holdings:'Total market · International · Bonds',date:'Model allocation',source:'https://www.investor.gov/introduction-investing/investing-basics/asset-allocation'},
+{id:'total',name:'Index-only market',type:'Benchmark',summary:'Low-cost, equity-first exposure to the broad market.',allocation:{us:70,intl:25,bonds:0,cash:5,alts:0},ret:8.2,vol:17,holdings:'US total market · International',date:'Model allocation',source:'https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded'},
+{id:'pelosi',name:'Pelosi disclosure proxy',type:'Congress',summary:'Large-cap growth and technology tilt based on disclosed household positions.',allocation:{us:82,intl:3,bonds:0,cash:5,alts:10},ret:8.7,vol:22,holdings:'Technology · Communications · Options proxy',date:'Illustrative disclosure proxy',source:'https://disclosures-clerk.house.gov/'},
+{id:'congress',name:'Congress equity composite',type:'Congress',summary:'Simplified blend of commonly disclosed large-cap sectors.',allocation:{us:73,intl:7,bonds:5,cash:5,alts:10},ret:8.0,vol:18,holdings:'Technology · Financials · Industrials',date:'Illustrative composite',source:'https://disclosures-clerk.house.gov/'},
+{id:'berkshire',name:'Berkshire 13F proxy',type:'Investor',summary:'Concentrated U.S. quality and value equity approximation.',allocation:{us:89,intl:0,bonds:0,cash:5,alts:6},ret:8.1,vol:19,holdings:'AAPL · AXP · BAC · KO · CVX',date:'13F quarter ended Jun 30, 2026',source:'https://www.sec.gov/edgar/browse/?CIK=0001067983'},
+{id:'bridgewater',name:'Bridgewater 13F proxy',type:'Investor',summary:'Diversified institutional equity proxy with emerging-market exposure.',allocation:{us:46,intl:32,bonds:5,cash:2,alts:15},ret:7.4,vol:14,holdings:'Broad ETFs · Emerging markets · Staples',date:'Illustrative 13F proxy',source:'https://www.sec.gov/edgar/search/'},
+{id:'permanent',name:'Permanent Portfolio',type:'Classic',summary:'Four equal sleeves built for different economic regimes.',allocation:{us:25,intl:0,bonds:25,cash:25,alts:25},ret:6.1,vol:9,holdings:'Stocks · Long bonds · Cash · Gold',date:'Classic model portfolio',source:'https://www.investor.gov/introduction-investing/investing-basics/asset-allocation'},
+{id:'aggressive',name:'Aggressive growth',type:'Classic',summary:'High-equity allocation designed for a long time horizon.',allocation:{us:65,intl:25,bonds:5,cash:0,alts:5},ret:8.4,vol:19,holdings:'US growth · International · REITs',date:'Model allocation',source:'https://www.investor.gov/introduction-investing/investing-basics/asset-allocation'}
+];
+let selected=['balanced','pelosi']; let activeFilter='all'; let real=true;
+const $=id=>document.getElementById(id); const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Math.max(0,n));
+function renderProfiles(){
+ const q=$('search').value.toLowerCase();
+ $('profileGrid').innerHTML=profiles.filter(p=>(activeFilter==='all'||p.type===activeFilter)&&(p.name+' '+p.summary+' '+p.holdings).toLowerCase().includes(q)).map(p=>{
+ const a=p.allocation; const is=selected.includes(p.id);
+ return '<button class="profile '+(is?'selected':'')+'" data-id="'+p.id+'"><span class="check">'+(is?'✓':'')+'</span><span class="type">'+p.type+'</span><h3>'+p.name+'</h3><p>'+p.summary+'</p><div class="bars"><span style="width:'+a.us+'%;background:'+colors.us+'"></span><span style="width:'+a.intl+'%;background:'+colors.intl+'"></span><span style="width:'+a.bonds+'%;background:'+colors.bonds+'"></span><span style="width:'+a.cash+'%;background:'+colors.cash+'"></span><span style="width:'+a.alts+'%;background:'+colors.alts+'"></span></div><div class="holdings">'+p.holdings+'</div><div class="date">'+p.date+'</div></button>'
+ }).join('');
+ document.querySelectorAll('.profile').forEach(el=>el.onclick=()=>{const id=el.dataset.id;if(selected.includes(id)){if(selected.length>1)selected=selected.filter(x=>x!==id)}else if(selected.length<3)selected.push(id);else selected=[selected[1],selected[2],id];renderProfiles()})
+}
+function params(){return{age:+$('age').value,target:+$('targetAge').value,start:+$('capital').value,monthly:+$('contribution').value,growth:+$('growth').value/100,infl:+$('inflation').value/100,fee:+$('fee').value/100,shockAge:+$('shockAge').value,shock:+$('shock').value/100}}
+function projection(profile,retShift=0){
+ const x=params(), years=Math.max(1,x.target-x.age), vals=[x.start];let v=x.start,c=x.monthly*12;
+ for(let y=1;y<=years;y++){let r=(profile.ret/100+retShift-x.fee);v=v*(1+r)+c*(1+r/2);if(x.age+y===x.shockAge)v*=1-x.shock;c*=1+x.growth;vals.push(real?v/Math.pow(1+x.infl,y):v)}
+ return vals
+}
+function calculate(){
+ const ps=selected.map(id=>profiles.find(p=>p.id===id)); const p=ps[0], med=projection(p), spread=Math.min(.055,p.vol/100*.22), low=projection(p,-spread), high=projection(p,spread);
+ $('dashTitle').textContent=ps.map(x=>x.name).join(' vs ');
+ $('medianValue').textContent=money(med[med.length-1]);$('lowValue').textContent=money(low[low.length-1]);$('highValue').textContent=money(high[high.length-1]);$('medianSub').textContent=real?'in today’s dollars':'nominal dollars';
+ const x=params(),mAge=Math.min(x.target,Math.max(x.age+1,55)),mi=mAge-x.age;$('mileAge').textContent='At age '+mAge;$('mileValue').textContent=money(med[mi]);
+ $('allocationRows').innerHTML=Object.entries(p.allocation).filter(x=>x[1]>0).map(([k,v])=>'<div class="alloc-row"><span>'+({us:'U.S. stocks',intl:'International',bonds:'Bonds',cash:'Cash',alts:'Alternatives'}[k])+'</span><span class="alloc-track"><i style="width:'+v+'%;background:'+colors[k]+'"></i></span><b>'+v+'%</b></div>').join('');
+ $('profileDisclosure').innerHTML='<b>'+p.name+'</b> is a simplified approximation, not a complete or current personal portfolio. Disclosures may be delayed, range-based, and omit asset classes. <a class="source-link" target="_blank" href="'+p.source+'">View source ↗</a>';
+ draw(ps,med,low,high);$('heroValue').textContent=money(med[med.length-1]);
+}
+function draw(ps,med,low,high){
+ const c=$('chart'),dpr=window.devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;c.width=w*dpr;c.height=h*dpr;const g=c.getContext('2d');g.scale(dpr,dpr);g.clearRect(0,0,w,h);
+ const mode=$('chartMode').value,x=params(), series=mode==='lines'?ps.map(p=>({name:p.name,vals:projection(p)})):[{name:'Optimistic',vals:high},{name:'Median',vals:med},{name:'Pessimistic',vals:low}];
+ const max=Math.max(...series.flatMap(s=>s.vals))*1.08,pad={l:58,r:14,t:15,b:30},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;
+ g.font='10px system-ui';g.fillStyle='#7b857f';g.strokeStyle='#e8ebe7';g.lineWidth=1;
+ for(let i=0;i<=4;i++){const y=pad.t+ch*i/4;g.beginPath();g.moveTo(pad.l,y);g.lineTo(w-pad.r,y);g.stroke();g.fillText(money(max*(1-i/4)).replace('.00',''),4,y+3)}
+ const palette=['#155f46','#5c78e8','#ff8d4d'];series.forEach((s,si)=>{g.beginPath();s.vals.forEach((v,i)=>{const px=pad.l+cw*i/(s.vals.length-1),py=pad.t+ch*(1-v/max);i?g.lineTo(px,py):g.moveTo(px,py)});g.strokeStyle=palette[si];g.lineWidth=si===0&&mode==='range'?2:2.5;if(mode==='range'&&si!==1)g.setLineDash([5,5]);else g.setLineDash([]);g.stroke()});g.setLineDash([]);
+ g.fillStyle='#7b857f';[0,.25,.5,.75,1].forEach(t=>{const age=Math.round(x.age+(x.target-x.age)*t);g.fillText(age,pad.l+cw*t-6,h-8)});
+ $('legend').innerHTML=series.map((s,i)=>'<span><i class="dot" style="background:'+palette[i]+'"></i>'+s.name+'</span>').join('')
+}
+function showDashboard(){document.querySelector('.library').classList.add('hidden');$('dashboard').classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view==='dashboard'));calculate()}
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{activeFilter=c.dataset.filter;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x===c));renderProfiles()});
+$('search').oninput=renderProfiles;$('growth').oninput=()=>{$('growthOut').textContent=$('growth').value+'%'};
+$('realToggle').onclick=()=>{real=!real;$('realToggle').classList.toggle('on',real);calculate()};
+$('advancedToggle').onclick=()=>{$('advancedToggle').classList.toggle('on');$('advanced').classList.toggle('open')};
+$('calculate').onclick=showDashboard;$('changeStrategy').onclick=()=>{document.querySelector('.library').classList.remove('hidden');$('dashboard').classList.remove('active');document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view==='library'))};
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>t.dataset.view==='dashboard'?showDashboard():$('changeStrategy').click());
+$('chartMode').onchange=calculate;window.onresize=()=>{if($('dashboard').classList.contains('active'))calculate()};
+$('saveBtn').onclick=()=>{localStorage.setItem('portfolioMirror',JSON.stringify({...params(),selected,real}));$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)};
+try{const s=JSON.parse(localStorage.getItem('portfolioMirror'));if(s){['age','targetAge','capital','contribution','inflation','fee','shockAge','shock'].forEach(k=>{if(s[k]!=null)$(k).value=s[k]});if(s.selected)selected=s.selected;if(s.real!=null)real=s.real}}catch(e){}
+renderProfiles();calculate();
+</script>
+</body>
+</html>
